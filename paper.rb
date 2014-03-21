@@ -20,10 +20,10 @@ end
 
 raise "Usage #{__FILE__} 20140108" if ARGV.length != 1
 
-Prawn::Document.generate('paper.pdf', :page_size => 'A4', :page_layout => :landscape) do |pdf|
+Prawn::Document.generate('paper.pdf', :page_size => 'A4', :left_margin => 0, :right_margin => 0, :page_layout => :landscape) do |pdf|
   date = Date.parse(ARGV[0])
   (0..13).each do |n|
-    start = date + (n * 28)
+    start = date + (n * 14)
     pdf.define_grid(:columns => 2, :rows => 3, :gutter => 0)
 
     pdf.stroke do
@@ -34,23 +34,23 @@ Prawn::Document.generate('paper.pdf', :page_size => 'A4', :page_layout => :lands
     #pdf.grid.show_all
 
     pdf.grid(0, 0).bounding_box do
-      draw_sprint(pdf, n + 1)
+      draw_sprint(pdf, n * 2 + 1)
     end
     pdf.grid(1, 0).bounding_box do
-      draw_week(pdf, start)
+      draw_week(pdf, start + n * 14)
     end
     pdf.grid(2, 0).bounding_box do
-      draw_year(pdf, start)
+      draw_year(pdf, start + n * 14)
     end
 
     pdf.grid(0, 1).bounding_box do
-      draw_sprint(pdf, n + 2)
+      draw_sprint(pdf, n * 2 + 2)
     end
     pdf.grid(1, 1).bounding_box do
-      draw_week(pdf, start + 14)
+      draw_week(pdf, start + n * 14 + 14)
     end
     pdf.grid(2, 1).bounding_box do
-      draw_year(pdf, start + 14)
+      draw_year(pdf, start + n * 14 + 14)
     end
 
 
